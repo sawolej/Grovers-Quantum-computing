@@ -13,7 +13,7 @@ def grover_search(target_state):
     qc.h(range(n))
 
     # Number of iterations
-    iterations = 2*n #9 #int((3.14/4) * (2 ** 0.5) * (2 ** (4/2)))
+    iterations = 2*n + 1 #9 #int((3.14/4) * (2 ** 0.5) * (2 ** (4/2)))
     #iterations = 9
 
     # Implementation of Groovers algorithm
@@ -67,7 +67,8 @@ for target_state in target_states:
     counts = result.get_counts(grover_circuit)
 
     for key in summed_results:
-        summed_results[key] += counts[key]
+        if key in counts.keys():
+            summed_results[key] += counts[key]
 
 #plotting the results
 print(summed_results)
