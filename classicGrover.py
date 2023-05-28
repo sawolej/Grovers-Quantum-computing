@@ -1,11 +1,8 @@
-#initialization
-import matplotlib.pyplot as plt
-import numpy as np
-import math
-
 # importing Qiskit
 from qiskit import IBMQ, Aer, transpile, execute
 from qiskit import QuantumCircuit, ClassicalRegister, QuantumRegister
+from qiskit_ibm_runtime import QiskitRuntimeService
+from qiskit_ibm_provider import IBMProvider
 from qiskit.providers.ibmq import least_busy
 
 # import basic plot tools
@@ -13,12 +10,18 @@ from qiskit.visualization import plot_histogram
 import matplotlib.pyplot as plt
 
 # Load IBM Q account and get the least busy backend device
+#IBMProvider.save_account(token='xxx')
+#provider = IBMProvider(token='xxx')
 provider = IBMQ.load_account()
 # for device
 # provider = IBMQ.get_provider("ibm-q")
 # device = least_busy(provider.backends(filters=lambda x: x.configuration().n_qubits >= 3 and
 #                                    not x.configuration().simulator and x.status().operational==True))
 # print("Running on current least busy device: ", device)
+
+service = QiskitRuntimeService(channel="ibm_quantum")
+backend = service.get_backend("ibmq_qasm_simulator")
+
 
 n = 3
 grover_circuit = QuantumCircuit(n)
@@ -65,24 +68,6 @@ print(grover_circuit.draw())
 
 result = execute(grover_circuit, backend).result()
 counts = result.get_counts()
-
-# grover_circuit = initialize_s(grover_circuit, (list(range(n - 1))))
-# print(grover_circuit.draw())
-# oracle(grover_circuit)
-# diffuser(grover_circuit)
-#
-# # Run circuit ont he simulator
-# sv_sim = Aer.get_backend('statevector_simulator')
-# result = sv_sim.run(grover_circuit).result()
-# statevec = result.get_statevector()
-# from qiskit.visualization import array_to_latex
-# array_to_latex(statevec, prefix="|\\psi\\rangle =")
-#
-# grover_circuit.measure_all()
-#
-# qasm_sim = Aer.get_backend('qasm_simulator')
-# result = qasm_sim.run(grover_circuit).result()
-# counts = result.get_counts()
 
 
 # Run circuit on the least busy backend. Monitor the execution of the job in the queue
