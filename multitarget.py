@@ -48,29 +48,31 @@ def grover_search(target_state):
 target_states = [[0, 1, 0, 0], [1, 1, 0, 1]]
 
 summed_results = {}
-#summed result dictionary
-for i in range(16):
-    binary = format(i, '04b')  # Conversion number to 4-bit
-    summed_results[binary] = 0
+def multi_target_grover():
 
-    #print(summed_results)
+    #summed result dictionary
+    for i in range(16):
+        binary = format(i, '04b')  # Conversion number to 4-bit
+        summed_results[binary] = 0
 
-# Calling groover search for every target and summing the results
-for target_state in target_states:
-    grover_circuit = grover_search(target_state[::-1])
-    #print(grover_circuit.draw())
+        #print(summed_results)
 
-    # Simulation of quantum circuit
-    simulator = Aer.get_backend('qasm_simulator')
-    job = execute(grover_circuit, simulator, shots=1024)
-    result = job.result()
-    counts = result.get_counts(grover_circuit)
+    # Calling groover search for every target and summing the results
+    for target_state in target_states:
+        grover_circuit = grover_search(target_state[::-1])
+        #print(grover_circuit.draw())
 
-    for key in summed_results:
-        if key in counts.keys():
-            summed_results[key] += counts[key]
+        # Simulation of quantum circuit
+        simulator = Aer.get_backend('qasm_simulator')
+        job = execute(grover_circuit, simulator, shots=1024)
+        result = job.result()
+        counts = result.get_counts(grover_circuit)
 
-#plotting the results
-print(summed_results)
-plot_histogram(summed_results)
-plt.show()
+        for key in summed_results:
+            if key in counts.keys():
+                summed_results[key] += counts[key]
+
+    #plotting the results
+    print(summed_results)
+    plot_histogram(summed_results)
+    plt.show()
