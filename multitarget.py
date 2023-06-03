@@ -45,11 +45,12 @@ def grover_search(target_state):
     return qc
 
 #defining targets
-target_states = [[0, 1, 0, 0], [1, 1, 0, 1]]
+
 
 summed_results = {}
 def multi_target_grover():
 
+    target_states = [[0, 1, 0, 0], [1, 1, 0, 1]]
     #summed result dictionary
     for i in range(16):
         binary = format(i, '04b')  # Conversion number to 4-bit
