@@ -21,9 +21,12 @@ def random_binary_arrays(n, x_bits):
     return arrays
 
 def main():
-    print(random_binary_arrays(2, 4))
+    qubits = 4
+    num_targets = 2
+    targets =random_binary_arrays(num_targets,qubits)
+    print(targets)
 
-    # multi_target_grover()
+    multi_target_grover(targets)
     # classic_grover()
 
 main()
