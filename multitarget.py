@@ -19,12 +19,12 @@ def grover_search(target_state):
     # Implementation of Groovers algorithm
     for _ in range(iterations):
         qc.barrier()
-        for i in range(4):
+        for i in range(4):               #TODO magic number, change to const
             if target_state[i] == 0:
                 qc.x(i)
-        qc.h(3)
-        qc.mct([0, 1, 2], 3)
-        qc.h(3)
+        qc.h(3)                          #TODO magic number, change to const (based of num of qubits)
+        qc.mct([0, 1, 2], 3)             #TODO magic number, can we make a dynamic list based of number of qubits?
+        qc.h(3)                          #TODO magic number, change to const (based of num of qubits)
         for i in range(n):
             if target_state[i] == 0:
                 qc.x(i)
@@ -32,9 +32,9 @@ def grover_search(target_state):
 
         qc.h(range(n))
         qc.x(range(n))
-        qc.h(3)
-        qc.mct([0, 1, 2], 3)
-        qc.h(3)
+        qc.h(3)                          #TODO as above
+        qc.mct([0, 1, 2], 3)             #TODO as above
+        qc.h(3)                          #TODO as above
         qc.x(range(n))
         qc.h(range(n))
         qc.barrier()
@@ -52,7 +52,7 @@ def multi_target_grover(targets):
 
     target_states = targets
     #summed result dictionary
-    for i in range(16):
+    for i in range(16):                 #TODO magic number, change to const
         binary = format(i, '04b')  # Conversion number to 4-bit
         summed_results[binary] = 0
 
