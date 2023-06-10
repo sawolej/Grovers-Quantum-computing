@@ -1,12 +1,13 @@
 from multitarget import multi_target_grover
 from classicGrover import classic_grover
 import random
-def random_binary_arrays(n, x_bits):
-    # Initialize the result list
-    arrays = []
 
-    # Loop n times
-    for _ in range(n):
+
+def random_binary_arrays(n, x_bits):
+
+    arrays = set()
+
+    while len(arrays) < n:
         num_range = 2**x_bits - 1
 
         num = random.randint(0, num_range)
@@ -15,14 +16,15 @@ def random_binary_arrays(n, x_bits):
 
         binary = binary.zfill(x_bits)
 
-        arrays.append([int(bit) for bit in binary])
+        binary_tuple = tuple(int(bit) for bit in binary)
 
-    # Return the list of lists
-    return arrays
+        arrays.add(binary_tuple)
+
+    return [list(array) for array in arrays]
 
 def main():
     qubits = 5
-    num_targets = 2
+    num_targets = 4
     targets =random_binary_arrays(num_targets,qubits)
     print(targets)
 
