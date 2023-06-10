@@ -23,8 +23,8 @@ def random_binary_arrays(n, x_bits):
     return [list(array) for array in arrays]
 
 def main():
-    qubits = 5
-    num_targets = 4
+    qubits = 2
+    num_targets = 1
     targets =random_binary_arrays(num_targets,qubits)
     print(targets)
 
