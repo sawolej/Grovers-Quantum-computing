@@ -1,25 +1,25 @@
 from qiskit import QuantumCircuit, Aer, execute
 import matplotlib.pyplot as plt
 from qiskit.visualization import plot_histogram
+import math
 
 #definition of groovers function
 
-def grover_search(target_state):
+def grover_search(target_state, iterations):
     # Initialization of a quantum object with 4
     print("qubits")
     n = len(target_state)
+    print("target_state")
+
+    print(target_state)
     print(n)
     qc = QuantumCircuit(n, n)
 
     # Initialization of the superposition equilibrium state
     qc.h(range(n))
 
-    # Number of iterations
-    iterations = 2*n + 1 #9 #int((3.14/4) * (2 ** 0.5) * (2 ** (4/2)))
-    #iterations = 9
-
     # Implementation of Groovers algorithm
-    for _ in range(iterations):
+    for _ in range(5):
         qc.barrier()
         for i in range(n):
             if target_state[i] == 0:
@@ -54,14 +54,20 @@ def multi_target_grover(targets):
 
     target_states = targets
     n = len(targets[0])
+    num_of_goals = len(targets)
+    searched_space = n**2
+    iterations = int((math.pi/4)*math.sqrt(searched_space/num_of_goals)) #2*n + 1 #9 #int((3.14/4) * (2 ** 0.5) * (2 ** (4/2)))
+    #iterations = 2 * n + 1
+    print("iterations")
+    print(iterations)
     #summed result dictionary
-    for i in range(2**n):
+    for i in range(searched_space):
         binary = format(i, '0{}b'.format(n))
         summed_results[binary] = 0
 
     # Calling groover search for every target and summing the results
     for target_state in target_states:
-        grover_circuit = grover_search(target_state[::-1])
+        grover_circuit = grover_search(target_state[::-1], iterations)
         #print(grover_circuit.draw())
 
         # Simulation of quantum circuit
