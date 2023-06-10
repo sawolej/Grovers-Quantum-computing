@@ -2,6 +2,7 @@ from qiskit import QuantumCircuit, Aer, execute
 import matplotlib.pyplot as plt
 from qiskit.visualization import plot_histogram
 import math
+import numpy as np
 
 #definition of groovers function
 
@@ -58,6 +59,7 @@ def grover_search(target_states, iterations):
 
 
 summed_results = {}
+percentage_results = {}
 def multi_target_grover(targets):
 
     target_states = targets
@@ -74,6 +76,7 @@ def multi_target_grover(targets):
     for i in range(searched_space):
         binary = format(i, '0{}b'.format(n))
         summed_results[binary] = 0
+        percentage_results[binary] = 0.0
 
     # Calling groover search for every target and summing the results
     grover_circuit = grover_search(target_states[::-1], iterations)
@@ -81,15 +84,42 @@ def multi_target_grover(targets):
 
     # Simulation of quantum circuit
     simulator = Aer.get_backend('qasm_simulator')
-    job = execute(grover_circuit, simulator, shots=1024)
+    shots = 1024
+    job = execute(grover_circuit, simulator, shots=shots)
     result = job.result()
     counts = result.get_counts(grover_circuit)
 
+    counter = 0
     for key in summed_results:
         if key in counts.keys():
             summed_results[key] += counts[key]
+            percentage_results[key] += counts[key]*100.0 / shots * 1.0
+            counter += percentage_results[key]
+            #print(f'counter: {summed_results[key]}')
 
+    #print(f'counter: {counter}')
+
+    '''
+    #old version
     #plotting the results
     print(summed_results)
     plot_histogram(summed_results)
+    plt.show()
+    '''
+
+
+    #new version
+    #plotting the results
+    print(percentage_results)
+
+    keys = percentage_results.keys()
+    values = percentage_results.values()
+
+    # Konwersja wartości na tablicę numpy
+    values = np.array(list(values))
+
+    plt.bar(keys, values)
+    plt.xlabel('Targets')
+    plt.ylabel('Probability')
+    plt.title("Grover's search")
     plt.show()
