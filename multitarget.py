@@ -15,6 +15,8 @@ def grover_search(target_states, iterations):
     qc.h(range(n))
 
     # Implementation of Grover's algorithm
+    print("co jest k")
+    print(iterations)
     for _ in range(iterations):
         # Oracle
         qc.barrier()
@@ -22,9 +24,13 @@ def grover_search(target_states, iterations):
             for i in range(n):
                 if target_state[i] == 0:
                     qc.x(i)
-            qc.h(n-1)
-            qc.mct(list(range(n - 1)), n - 1)  # This is a controlled-Z gate for multiple controls
-            qc.h(n-1)
+            qc.h(n - 1)
+            if n > 2:
+                qc.mct(list(range(n - 1)), n - 1)  # Multi-controlled Toffoli for 3+ qubits
+            else:
+                qc.cx(0, 1)  # CNOT for 2 qubits
+            qc.h(n - 1)
+
             for i in range(n):
                 if target_state[i] == 0:
                     qc.x(i)
@@ -33,9 +39,12 @@ def grover_search(target_states, iterations):
         # Diffuser
         qc.h(range(n))
         qc.x(range(n))
-        qc.h(n-1)
-        qc.mct(list(range(n - 1)), n - 1)
-        qc.h(n-1)
+        qc.h(n - 1)
+        if n > 2:
+            qc.mct(list(range(n - 1)), n - 1)  # Multi-controlled Toffoli for 3+ qubits
+        else:
+            qc.cx(0, 1)  # CNOT for 2 qubits
+        qc.h(n - 1)
         qc.x(range(n))
         qc.h(range(n))
         qc.barrier()
@@ -55,7 +64,9 @@ def multi_target_grover(targets):
     n = len(targets[0])
     num_of_goals = len(targets)
     searched_space = 2**n
-    iterations = int((math.pi/4)*math.sqrt(searched_space/num_of_goals))
+    print("(math.pi/4)*math.sqrt(searched_space/num_of_goals)")
+    print((math.pi/4)*math.sqrt(searched_space/num_of_goals))
+    iterations = int(((math.pi/4)*math.sqrt(searched_space/num_of_goals)))#round((math.pi/4)*math.sqrt(searched_space/num_of_goals))
     #iterations = 2 * n + 1
     print("iterations")
     print(iterations)
