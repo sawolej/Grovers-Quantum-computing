@@ -5,8 +5,10 @@ from qiskit.visualization import plot_histogram
 #definition of groovers function
 
 def grover_search(target_state):
-    # Initialization of a quantum object with 4 qubits
+    # Initialization of a quantum object with 4
+    print("qubits")
     n = len(target_state)
+    print(n)
     qc = QuantumCircuit(n, n)
 
     # Initialization of the superposition equilibrium state
@@ -19,12 +21,12 @@ def grover_search(target_state):
     # Implementation of Groovers algorithm
     for _ in range(iterations):
         qc.barrier()
-        for i in range(4):               #TODO magic number, change to const
+        for i in range(n):
             if target_state[i] == 0:
                 qc.x(i)
-        qc.h(3)                          #TODO magic number, change to const (based of num of qubits)
-        qc.mct([0, 1, 2], 3)             #TODO magic number, can we make a dynamic list based of number of qubits?
-        qc.h(3)                          #TODO magic number, change to const (based of num of qubits)
+        qc.h(n-1)
+        qc.mct(list(range(n - 1)), n - 1)
+        qc.h(n-1)
         for i in range(n):
             if target_state[i] == 0:
                 qc.x(i)
@@ -32,9 +34,9 @@ def grover_search(target_state):
 
         qc.h(range(n))
         qc.x(range(n))
-        qc.h(3)                          #TODO as above
-        qc.mct([0, 1, 2], 3)             #TODO as above
-        qc.h(3)                          #TODO as above
+        qc.h(n-1)
+        qc.mct(list(range(n - 1)), n - 1)
+        qc.h(n-1)
         qc.x(range(n))
         qc.h(range(n))
         qc.barrier()
@@ -51,12 +53,11 @@ summed_results = {}
 def multi_target_grover(targets):
 
     target_states = targets
+    n = len(targets[0])
     #summed result dictionary
-    for i in range(16):                 #TODO magic number, change to const
-        binary = format(i, '04b')  # Conversion number to 4-bit
+    for i in range(2**n):
+        binary = format(i, '0{}b'.format(n))
         summed_results[binary] = 0
-
-        #print(summed_results)
 
     # Calling groover search for every target and summing the results
     for target_state in target_states:

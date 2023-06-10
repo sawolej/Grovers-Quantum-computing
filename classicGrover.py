@@ -59,10 +59,12 @@ def classic_grover():
 
     backend = Aer.get_backend('qasm_simulator')
     grover_circuit = QuantumCircuit(n)
-    grover_circuit = initialize_s(grover_circuit, [0,1,2]) # step 1   #TODO magic numbers, change to dynamic list
+    grover_circuit = initialize_s(grover_circuit, list(range(n))) # step 1
     grover_circuit.barrier()
-    grover_circuit.append(oracle, [0,1,2]) # step 2
-    grover_circuit.append(diffuser(n), [0,1,2]) # step 3
+    print(n)
+    print(list(range(n)))
+    grover_circuit.append(oracle, list(range(n))) # step 2
+    grover_circuit.append(diffuser(n), list(range(n))) # step 3
     grover_circuit.measure_all()
     print(grover_circuit.draw())
 
