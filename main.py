@@ -24,7 +24,8 @@ def random_binary_arrays(n, x_bits):
 
 def main():
     qubits = 4
-    num_targets = 4
+    num_targets = 2
+
     targets =random_binary_arrays(num_targets,qubits)
     print(targets)
 

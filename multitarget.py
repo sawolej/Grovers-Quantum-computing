@@ -7,7 +7,7 @@ import numpy as np
 #definition of groovers function
 
 def grover_search(target_states, iterations):
-    # We assume that all target states have the same length
+
     n = len(target_states[0])
 
     qc = QuantumCircuit(n, n)
@@ -16,8 +16,6 @@ def grover_search(target_states, iterations):
     qc.h(range(n))
 
     # Implementation of Grover's algorithm
-    print("co jest k")
-    print(iterations)
     for _ in range(iterations):
         # Oracle
         qc.barrier()
@@ -35,6 +33,7 @@ def grover_search(target_states, iterations):
             for i in range(n):
                 if target_state[i] == 0:
                     qc.x(i)
+            qc.barrier()
         qc.barrier()
 
         # Diffuser
@@ -55,12 +54,12 @@ def grover_search(target_states, iterations):
 
     return qc
 
-#defining targets
 
 
-summed_results = {}
-percentage_results = {}
 def multi_target_grover(targets):
+
+    summed_results = {}
+    percentage_results = {}
 
     target_states = targets
     n = len(targets[0])
@@ -68,10 +67,11 @@ def multi_target_grover(targets):
     searched_space = 2**n
     print("(math.pi/4)*math.sqrt(searched_space/num_of_goals)")
     print((math.pi/4)*math.sqrt(searched_space/num_of_goals))
-    iterations = int(((math.pi/4)*math.sqrt(searched_space/num_of_goals)))#round((math.pi/4)*math.sqrt(searched_space/num_of_goals))
-    #iterations = 2 * n + 1
+    iterations = int(((math.pi/4)*math.sqrt(searched_space/num_of_goals)))#round((math.pi/4)*math.sqrt(searched_space/num_of_goals))#iterations = 2 * n + 1
     print("iterations")
     print(iterations)
+    if(iterations<1):
+        iterations=1
     #summed result dictionary
     for i in range(searched_space):
         binary = format(i, '0{}b'.format(n))
@@ -80,7 +80,8 @@ def multi_target_grover(targets):
 
     # Calling groover search for every target and summing the results
     grover_circuit = grover_search(target_states[::-1], iterations)
-    #print(grover_circuit.draw())
+    print(grover_circuit.draw(fold=-1))
+
 
     # Simulation of quantum circuit
     simulator = Aer.get_backend('qasm_simulator')
@@ -97,18 +98,6 @@ def multi_target_grover(targets):
             counter += percentage_results[key]
             #print(f'counter: {summed_results[key]}')
 
-    #print(f'counter: {counter}')
-
-    '''
-    #old version
-    #plotting the results
-    print(summed_results)
-    plot_histogram(summed_results)
-    plt.show()
-    '''
-
-
-    #new version
     #plotting the results
     print(percentage_results)
 
