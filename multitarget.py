@@ -96,7 +96,6 @@ def multi_target_grover(targets):
             summed_results[key] += counts[key]
             percentage_results[key] += counts[key]*100.0 / shots * 1.0
             counter += percentage_results[key]
-            #print(f'counter: {summed_results[key]}')
 
     #plotting the results
     print(percentage_results)
