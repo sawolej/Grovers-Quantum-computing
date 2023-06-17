@@ -2,14 +2,16 @@
 
 Implementation of Adapted Grover's Algorithm for Multitarget Unordered Database Searching - Team Project for uni class. 
 
+
 ## Description
 
 This project involves the implementation and investigation of Grover's algorithm in a multi-target quantum search context. The algorithm was implemented using Qiskit, a popular framework for quantum computing, which allows us to define, manipulate, and simulate quantum circuits.
-More analysis coming
 
-### Dependencies
+More analysis coming.
 
-This project is implemented in Python using the Qiskit package for quantum computing simulations. The other dependencies are matplotlib for visualization, numpy for mathematical operations and the standard math module.
+## Requirements
+
+This project is implemented in Python 3 using the Qiskit package for quantum computing simulations. The other dependencies are matplotlib for visualization, numpy for mathematical operations and the standard math module.
 
 Here's a list of the dependencies:
 
@@ -18,30 +20,75 @@ Here's a list of the dependencies:
 * numpy
 * math
 
-### Installing
+## Installation & Setup
 
-First, you need to have Python installed on your machine. You can download it from the official website: https://www.python.org/
+To setup the environment for the project, follow these steps:
 
-Once Python is installed, you can install the required packages using pip. pip is a package manager for Python and should come with the Python installation.
-
-To install the required packages, you can use the following command:
-```
-pip install qiskit matplotlib numpy
+1. Clone the repository to your local environment. You can do this by running the following command in your terminal:
 
 ```
+git clone <repo-link>
+```
+  
+2. Navigate to the cloned repository by using:
 
+```
+cd <cloned-repo-directory>
+```
 
-### Executing program
+3. We recommend creating a virtual environment to isolate the project dependencies. You can create it by using:
 
-Once the dependencies are installed, you can run the program by executing the Python script. Navigate to the folder containing the script in your command line, and then execute the following command:
+```
+python3 -m venv env
+```
+
+4. Activate the virtual environment:
+
+    - On macOS and Linux:
+    ```
+    source env/bin/activate
+    ```
+
+    - On Windows:
+    ```
+    .\env\Scripts\activate
+    ```
+
+5. Install the required dependencies from `requirements.txt`:
+
+```
+pip install -r requirements.txt
+```
+
+## Running the Simulator
+
+After completing the setup, you can run the Grover's Algorithm simulator by executing the `main.py` script:
+
 ```
 python main.py
 ```
-Initially it will work for 4-Qubits system and 2 random target states, you can change that in the main function
-## Help
-For specific questions related to Qiskit, you can consult the Qiskit documentation at https://qiskit.org/documentation/.
 
-It was observed that when the number of target states was exactly half of the search space, the algorithm behaved differently. In such cases, the success probability was essentially random, showing no clear peak.
-When target states exceed half of the search space, efficiency undergoes a significant shift. In these cases, we found it more optimal to invert the problem and use Grover’s algorithm to search for the non-target states,
+This script will execute the Grover's Algorithm with a 2-qubit system and two targets. The targets are randomly generated. Results will be displayed in the console, including the quantum circuit diagram and a histogram of the simulation results.
+
+## Customizing the Simulator
+
+You can modify the number of qubits and targets by changing the `qubits` and `num_targets` variables in the `main()` function within the `main.py` script.
+Initially program will run with 4-Qubits system and 2 random target states
+
+## Understanding the Results
+
+The simulator uses the Qiskit library's qasm_simulator to simulate the quantum circuits. The output histogram visualizes the probabilities of each state after running the Grover's algorithm. Ideally, the target states should have significantly higher probabilities.
+
+Please note that this simulator uses a basic implementation of Milti-Target Grover's Algorithm and does not cater to potential physical real-world restrictions or errors in a practical quantum computer.
+
+## Troubleshooting
+
+If you encounter any issues, please check that you have the correct versions of Python and all required packages installed. Also, make sure you've followed the installation and setup instructions correctly. If the problem persists, feel free to raise an issue on the GitHub repository.
+
+## References
+
+The simulator uses the [Qiskit library](https://qiskit.org/) to build and simulate quantum circuits. Refer to the Qiskit documentation for detailed information about the quantum operations and methods used in this project.
+
+
 
 
