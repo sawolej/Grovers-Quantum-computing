@@ -27,7 +27,7 @@ To setup the environment for the project, follow these steps:
 1. Clone the repository to your local environment. You can do this by running the following command in your terminal:
 
 ```
-git clone <repo-link>
+git clone https://github.com/sawolej/Grovers-Quantum-computing.git
 ```
   
 2. Navigate to the cloned repository by using:
@@ -54,10 +54,11 @@ python3 -m venv env
     .\env\Scripts\activate
     ```
 
-5. Install the required dependencies from `requirements.txt`:
+5. Install the required dependencies:
 
 ```
-pip install -r requirements.txt
+pip install qiskit matplotlib numpy
+
 ```
 
 ## Running the Simulator
