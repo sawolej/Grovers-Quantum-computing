@@ -69,12 +69,12 @@ After completing the setup, you can run the Grover's Algorithm simulator by exec
 python main.py
 ```
 
-This script will execute the Grover's Algorithm with a 2-qubit system and two targets. The targets are randomly generated. Results will be displayed in the console, including the quantum circuit diagram and a histogram of the simulation results.
+Initially this script will execute the Multi-Target Grover's Algorithm with a 4-qubit system and two targets. The targets are randomly generated. Results will be displayed in the console, including the quantum circuit diagram and a histogram of the simulation results.
 
 ## Customizing the Simulator
 
 You can modify the number of qubits and targets by changing the `qubits` and `num_targets` variables in the `main()` function within the `main.py` script.
-Initially program will run with 4-Qubits system and 2 random target states
+
 
 ## Understanding the Results
 
